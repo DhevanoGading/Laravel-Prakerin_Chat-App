@@ -28,16 +28,11 @@
                   <form action="{{ url('customer/'.$value->id) }}" method="POST">
                     @csrf
                     <input type="hidden" name="_method" value="DELETE">
-                    <button class="btn btn-danger" type="submit" onclick="deleteAlert()">Delete</button>
+                    <button class="btn btn-danger" type="submit">Delete</button>
                   </form>
                 </td>
             </tr>
         @endforeach
     </tbody>
   </table>
-  <script>
-      function deleteAlert(){
-          alert("yakin ingin menghapus data ini?")
-      }
-  </script>
 @endsection
