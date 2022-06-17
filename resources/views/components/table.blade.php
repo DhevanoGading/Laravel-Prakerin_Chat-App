@@ -5,7 +5,9 @@
         <th scope="col">Nama</th>
         <th scope="col">Asal</th>
         <th scope="col">Tanggal Lahir</th>
-        <th scope="col">Aksi</th>
+        @if (auth()->user()->level == "superadmin" || auth()->user()->level == "admin")
+          <th scope="col-2">Aksi</th>
+        @endif
       </tr>
     </thead>
     <tbody>

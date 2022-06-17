@@ -15,9 +15,40 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('home', [
-        "tittle" => "Home"
-    ]);
+    return view('home');
 });
 
-Route::resource('customer', CustomerController::class);
+// Route::resource('customer', CustomerController::class);
+// Route::get('/customer/{id}', [CustomerController::class, 'show']);
+
+Route::get('/customer', [CustomerController::class, 'index']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['auth', 'ceklevel:superadmin']], function () {
+    Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
+});
+
+Route::group(['middleware' => ['auth', 'ceklevel:admin,superadmin']], function () {
+    Route::get('/customer/create', [CustomerController::class, 'create']);
+    Route::post('/customer', [CustomerController::class, 'store']);
+    Route::put('/customer/{id}', [CustomerController::class, 'update']);
+    Route::get('/customer/{id}/edit', [CustomerController::class, 'edit']);
+});
+
+// Route::group(['middleware' => 'super_admin'], function () {
+//     Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
+// });
+
+// Route::group(['middleware' => 'admin|super_admin'], function () {
+//     Route::get('/customer/create', [CustomerController::class, 'create']);
+//     Route::post('/customer', [CustomerController::class, 'store']);
+//     Route::put('/customer/{id}', [CustomerController::class, 'update']);
+//     Route::get('/customer/{id}/edit', [CustomerController::class, 'edit']);
+// });
+
+
+// Route::group(['middleware' => 'user' || 'admin' || 'super_admin'], function () {
+// });
