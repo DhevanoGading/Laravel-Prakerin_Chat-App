@@ -68,7 +68,7 @@ class UserController extends Controller
                 return ApiFormatter::createApi(400, 'Create data user failed!');
             }
         } catch (Exception $error) {
-            return ApiFormatter::createApi(400, 'Create data user failed!');
+            return ApiFormatter::createApi(400, 'Create data user failed!', $error);
         }
     }
 
@@ -119,8 +119,8 @@ class UserController extends Controller
             $user = User::findOrFail($id);
 
             $user->update([
-                'name' => $request->nama,
-                'email' => $request->asal,
+                'name' => $request->name,
+                'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
 
@@ -132,7 +132,7 @@ class UserController extends Controller
                 return ApiFormatter::createApi(400, 'Update data user failed!');
             }
         } catch (Exception $error) {
-            return ApiFormatter::createApi(400, 'Update data user failed!');
+            return ApiFormatter::createApi(400, 'Update data user failed!', $error);
         }
     }
 
@@ -149,7 +149,7 @@ class UserController extends Controller
         $data = $user->delete();
 
         if ($data) {
-            return ApiFormatter::createApi(200, 'Delete data customer successfully!');
+            return ApiFormatter::createApi(200, 'Delete data customer successfully!', $user);
         } else {
             return ApiFormatter::createApi(400, 'Delete data customer failed!');
         }
