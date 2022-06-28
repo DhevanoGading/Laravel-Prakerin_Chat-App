@@ -21,7 +21,6 @@ Route::get('/', function () {
 // Route::resource('customer', CustomerController::class);
 // Route::get('/customer/{id}', [CustomerController::class, 'show']);
 
-Route::get('/customer', [CustomerController::class, 'index']);
 
 Auth::routes();
 
@@ -36,6 +35,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin,superadmin']], function (
     Route::post('/customer', [CustomerController::class, 'store']);
     Route::put('/customer/{id}', [CustomerController::class, 'update']);
     Route::get('/customer/{id}/edit', [CustomerController::class, 'edit']);
+});
+
+Route::group(['middleware' => ['auth', 'ceklevel:admin,superadmin,user']], function () {
+    Route::get('/customer', [CustomerController::class, 'index']);
 });
 
 // Route::group(['middleware' => 'super_admin'], function () {

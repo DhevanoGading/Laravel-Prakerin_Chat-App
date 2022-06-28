@@ -9,7 +9,7 @@
             <form action="{{ route('register') }}" method="POST">
                 @csrf
                 <div class="form-floating">
-                    <input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" id="name" placeholder="Name" required value="{{ old('name') }}">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Name" required value="{{ old('name') }}">
                     <label for="name">Name</label>
                     @error('name')
                         <div class="invalid-feedback">
@@ -27,7 +27,7 @@
                     @enderror
                 </div>
                 <div class="form-floating">
-                    <input type="password" name="password" class="form-control rounded-bottom @error('password') is-invalid @enderror" id="password" placeholder="Password" required autocomplete="new-password">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" required autocomplete="new-password">
                     <label for="password">Password</label>
                     @error('password')
                         <div class="invalid-feedback">
@@ -45,10 +45,10 @@
                     @enderror
                 </div>
 
-              <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Register</button>
+              <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Register</button>
 
             </form>
-            <small class="d-block text-center mt-3">Already login? <a href="{{ route('login') }}">Login now!</a></small>
+            <small class="d-block text-center mt-3">Already login? <a class="text-decoration-none" href="{{ route('login') }}">Login now!</a></small>
           </main>
     </div>
 </div>

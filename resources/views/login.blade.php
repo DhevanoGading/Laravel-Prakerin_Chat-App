@@ -36,10 +36,10 @@
                     <label for="password">Password</label>
                 </div>
 
-              <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+              <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Login</button>
 
             </form>
-            <small class="d-block text-center mt-3">Not registered? <a href="{{ route('register') }}">Register now!</a></small>
+            <small class="d-block text-center mt-3">Not registered? <a class="text-decoration-none" href="{{ route('register') }}">Register now!</a></small>
           </main>
     </div>
 </div>

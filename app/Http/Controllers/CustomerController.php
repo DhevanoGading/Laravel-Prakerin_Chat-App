@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiFormatter;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Exception;
 
 class CustomerController extends Controller
 {
@@ -19,9 +21,16 @@ class CustomerController extends Controller
     public function index()
     {
         $datas = Customer::all();
-        return view('customer.index', compact(
-            'datas'
-        ));
+
+        if ($datas) {
+            return ApiFormatter::createApi(200, 'Read data customer successfully!', $datas);
+        } else {
+            return ApiFormatter::createApi(400, 'Read data customer failed!');
+        }
+
+        // return view('customer.index', compact(
+        //     'datas'
+        // ));
     }
 
     /**
@@ -45,13 +54,37 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $model = new Customer;
-        $model->nama = $request->nama;
-        $model->asal = $request->asal;
-        $model->tanggal_lahir = $request->tanggal_lahir;
-        $model->save();
+        try {
+            $request->validate([
+                'nama' => 'required',
+                'asal' => 'required',
+                'tanggal_lahir' => 'required'
+            ]);
 
-        return redirect('customer');
+            $customer = Customer::create([
+                'nama' => $request->nama,
+                'asal' => $request->asal,
+                'tanggal_lahir' => $request->tanggal_lahir,
+            ]);
+
+            $data = Customer::where('id', '=', $customer->id)->get();
+
+            if ($data) {
+                return ApiFormatter::createApi(200, 'Create data customer successfully!', $data);
+            } else {
+                return ApiFormatter::createApi(400, 'Create data customer failed!');
+            }
+        } catch (Exception $error) {
+            return ApiFormatter::createApi(400, 'Create data customer failed!');
+        }
+
+        // $model = new Customer;
+        // $model->nama = $request->nama;
+        // $model->asal = $request->asal;
+        // $model->tanggal_lahir = $request->tanggal_lahir;
+        // $model->save();
+
+        // return redirect('customer');
     }
 
     /**
@@ -62,7 +95,13 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Customer::where('id', '=', $id)->get();
+
+        if ($data) {
+            return ApiFormatter::createApi(200, 'Show data customer successfully!', $data);
+        } else {
+            return ApiFormatter::createApi(400, 'Show data customer failed!');
+        }
     }
 
     /**
@@ -88,13 +127,39 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = Customer::find($id);
-        $model->nama = $request->nama;
-        $model->asal = $request->asal;
-        $model->tanggal_lahir = $request->tanggal_lahir;
-        $model->save();
+        try {
+            $request->validate([
+                'nama' => 'required',
+                'asal' => 'required',
+                'tanggal_lahir' => 'required'
+            ]);
 
-        return redirect('customer');
+            $customer = Customer::findOrFail($id);
+
+            $customer->update([
+                'nama' => $request->nama,
+                'asal' => $request->asal,
+                'tanggal_lahir' => $request->tanggal_lahir,
+            ]);
+
+            $data = Customer::where('id', '=', $customer->id)->get();
+
+            if ($data) {
+                return ApiFormatter::createApi(200, 'Update data customer successfully!', $data);
+            } else {
+                return ApiFormatter::createApi(400, 'Update data customer failed!');
+            }
+        } catch (Exception $error) {
+            return ApiFormatter::createApi(400, 'Update data customer failed!');
+        }
+
+        // $model = Customer::find($id);
+        // $model->nama = $request->nama;
+        // $model->asal = $request->asal;
+        // $model->tanggal_lahir = $request->tanggal_lahir;
+        // $model->save();
+
+        // return redirect('customer');
     }
 
     /**
@@ -105,8 +170,18 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $model = Customer::find($id);
-        $model->delete();
-        return redirect('customer');
+        $customer = Customer::findOrFail($id);
+
+        $data = $customer->delete();
+
+        if ($data) {
+            return ApiFormatter::createApi(200, 'Delete data customer successfully!');
+        } else {
+            return ApiFormatter::createApi(400, 'Delete data customer failed!');
+        }
+
+        // $model = Customer::find($id);
+        // $model->delete();
+        // return redirect('customer');
     }
 }
