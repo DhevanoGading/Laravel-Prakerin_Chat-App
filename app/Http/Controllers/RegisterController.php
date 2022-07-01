@@ -33,7 +33,7 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            return response()->json()([
+            return response()->json([
                 'success' => true,
                 'message' => 'Register Successfully!',
                 'data' => $user
@@ -66,11 +66,11 @@ class RegisterController extends Controller
             ]);
         }
 
-        return response()->json()([
+        return response()->json([
             'success' => true,
             'message' => 'Login Successfully!',
-            'data' => $user,
-            'token' => $user->createToken('authToken')->accessToken
+            'token' => $user->createToken('authToken')->accessToken,
+            'data' => $user
         ]);
     }
 
@@ -84,7 +84,7 @@ class RegisterController extends Controller
         $removeToken = $request->user()->tokens()->delete();
 
         if ($removeToken) {
-            return response()->json()([
+            return response()->json([
                 'success' => true,
                 'message' => 'Logout Successfully!'
             ]);
