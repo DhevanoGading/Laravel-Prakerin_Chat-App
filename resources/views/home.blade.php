@@ -16,9 +16,25 @@
                     @endif
 
                     {{ __('You are logged in!') }} --}}
-                    <div class="content">
-                        
-                    </div>
+                    {{-- <div class="content">
+                      <div class="container">
+                        <div class="row chat-row">
+                            <div class="chat-content">
+                                <ul>
+                                    
+                                </ul>
+                            </div>
+                                
+                            <div class="chat-section">
+                                <div class="chat-box">
+                                    <div class="chat-input bg-primary text-white" id="chatInput" contenteditable="">
+                                
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

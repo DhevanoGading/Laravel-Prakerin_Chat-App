@@ -9,11 +9,21 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
-        @auth
+          <li class="nav-item"></li>
+          @auth
+          <li class="nav-item">
+            <a class="nav-link active" href="customer">Customer</a>
+          </li>
+          @if (auth()->user()->level == "admin")
             <li class="nav-item">
-              <a class="nav-link active" href="customer">Customer</a>
+              <a class="nav-link active" href="service/admin">Service</a>
             </li>
-          </ul>
+            @elseif (auth()->user()->level == "user")
+            <li class="nav-item">
+              <a class="nav-link active" href="service/user">Service</a>
+            </li>
+            @endif
+        </ul>
         </div>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item dropdown">

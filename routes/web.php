@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth', 'ceklevel:superadmin']], function () {
     Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
@@ -39,6 +41,14 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin,superadmin']], function (
 
 Route::group(['middleware' => ['auth', 'ceklevel:admin,superadmin,user']], function () {
     Route::get('/customer', [CustomerController::class, 'index']);
+});
+
+Route::group(['middleware' => ['auth', 'ceklevel:admin']], function () {
+    Route::get('/service/admin/{id?}', [ServiceController::class, 'index'])->name('service/admin');
+});
+
+Route::group(['middleware' => ['auth', 'ceklevel:user']], function () {
+    Route::get('/service/user/{id?}', [ServiceController::class, 'indexUser'])->name('service/user');
 });
 
 // Route::group(['middleware' => 'super_admin'], function () {
