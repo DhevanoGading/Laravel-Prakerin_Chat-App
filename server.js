@@ -72,25 +72,6 @@ io.on('connection', (socket) => {
             console.log("Message sent");
         });
     });
-
-    // socket.on('sendDataToServer', (data) => {
-    //     // console.log(data)
-
-    //     io.sockets.emit('sendDataToClient', data);
-    //     // socket.broadcast.emit('sendDataToClient', data);
-    // });
-
-    //CHATAPP
-    // socket.on('sendMessageToServer', (message) => {
-    //     console.log(message)
-
-    //     io.sockets.emit('sendMessageToClient', message);
-    //     socket.broadcast.emit('sendMessageToClient', message);
-    // });
-
-    // socket.on('disconnect', (socket) => {
-    //     console.log('Disconnect')
-    // });
 });
 
 server.listen(3000, () => {
